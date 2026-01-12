@@ -1,0 +1,40 @@
+<input id="nama" placeholder="Nama Lengkap">
+<input id="email" placeholder="Email">
+<input id="password" placeholder="Password">
+<input id="angkatan" placeholder="Angkatan">
+<button id="daftar">Daftar</button>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC1ymb2-yM9aB1XAZrxuis_vBrP705D3Bk",
+  authDomain: "himagara-e5291.firebaseapp.com",
+  projectId: "himagara-e5291"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+document.getElementById("daftar").onclick = async () => {
+  const nama = nama.value;
+  const email = email.value;
+  const password = password.value;
+  const angkatan = Number(angkatan.value);
+
+  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+  await setDoc(doc(db, "users", userCredential.user.uid), {
+    nama,
+    email,
+    angkatan,
+    role: "anggota",
+    createdAt: new Date()
+  });
+
+  alert("User berhasil dibuat");
+};
+</script>
