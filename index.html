@@ -97,6 +97,16 @@
 <footer>
     <p>&copy; 2026 Himpunan Mahasiswa Administrasi Negara UNNUR</p>
 </footer>
+<script type="module">
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
+const auth = getAuth();
+
+onAuthStateChanged(auth, user => {
+  if (!user) {
+    window.location.href = "login.html";
+  }
+});
+</script>
 </body>
 </html>
